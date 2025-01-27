@@ -2,6 +2,7 @@ package com.todotic.project1Api.service;
 
 import com.todotic.project1Api.entity.Contact;
 import com.todotic.project1Api.repository.ContactRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Service
 public class ContactService {
-    @Autowired
-    private ContactRepository contactRepository;
+
+    private final ContactRepository contactRepository;
 
     public Iterable<Contact> findAll() {
         return contactRepository.findAll();

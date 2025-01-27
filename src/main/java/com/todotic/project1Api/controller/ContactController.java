@@ -5,6 +5,8 @@ import com.todotic.project1Api.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RequestMapping("/api/contacts")
 @RestController
 public class ContactController {
@@ -24,8 +26,18 @@ public class ContactController {
                 .orElse(null);
     }
 
-    @PostMapping("")
-    public Contact create(Contact contact) {
+    @PostMapping
+    public Contact create(@RequestBody Contact contact) {
+        contact.setCreatedAt(LocalDateTime.now());
+        return contactRepository.save(contact);
+    }
+
+    @PutMapping("{id}")
+    public Contact update(@PathVariable Integer id,
+                          @RequestBody Contact contact) {
+        Contact contactFromDb = contactRepository
+                .findById(id)
+                .orElse(null);
         return contactRepository.save(contact);
     }
 

@@ -30,18 +30,14 @@ public class ContactService {
     }
 
     public Contact update(Integer id, Contact form) {
-        Contact contactFromDb = contactRepository
-                .findById(id)
-                .orElse(null);
+        Contact contactFromDb = findById(id);
         contactFromDb.setName(form.getName());
         contactFromDb.setEmail(form.getEmail());
         return contactRepository.save(contactFromDb);
     }
 
     public void delete(Integer id) {
-        Contact contactFromDb = contactRepository
-                .findById(id)
-                .orElse(null);
+        Contact contactFromDb = findById(id);
         contactRepository.delete(contactFromDb);
     }
 

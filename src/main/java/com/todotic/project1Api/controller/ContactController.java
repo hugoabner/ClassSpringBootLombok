@@ -1,15 +1,12 @@
 package com.todotic.project1Api.controller;
 
 import com.todotic.project1Api.entity.Contact;
-import com.todotic.project1Api.repository.ContactRepository;
 import com.todotic.project1Api.service.ContactService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-
+@CrossOrigin
 @AllArgsConstructor
 @RequestMapping("/api/contacts")
 @RestController

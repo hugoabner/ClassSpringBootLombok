@@ -1,12 +1,13 @@
 package com.todotic.project1Api.service;
 
+import com.todotic.project1Api.dto.ContactDTO;
 import com.todotic.project1Api.entity.Contact;
+import com.todotic.project1Api.exception.ResourceNotFoundException;
 import com.todotic.project1Api.repository.ContactRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 public class ContactService {
 
     private final ContactRepository contactRepository;
+    private final ModelMapper mapper;
 
     public Iterable<Contact> findAll() {
         return contactRepository.findAll();
@@ -23,18 +25,18 @@ public class ContactService {
     public Contact findById(Integer id) {
         return contactRepository
                 .findById(id)
-                .orElse(null);
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
-    public Contact create(Contact contact) {
+    public Contact create(ContactDTO contactDTO) {
+        Contact contact = mapper.map(contactDTO, Contact.class);
         contact.setCreatedAt(LocalDateTime.now());
         return contactRepository.save(contact);
     }
 
-    public Contact update(Integer id, Contact form) {
+    public Contact update(Integer id, ContactDTO contactDTO) {
         Contact contactFromDb = findById(id);
-        contactFromDb.setName(form.getName());
-        contactFromDb.setEmail(form.getEmail());
+        mapper.map(contactDTO, contactFromDb);
         return contactRepository.save(contactFromDb);
     }
 

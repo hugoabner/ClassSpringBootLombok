@@ -2,6 +2,7 @@ package com.todotic.project1Api;
 
 import com.todotic.project1Api.entity.Contact;
 import com.todotic.project1Api.repository.ContactRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,5 +32,10 @@ public class Project1ApiApplication {
             );
             contactRepository.saveAll(contacts);
         };
+	}
+
+	@Bean
+    ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 }

@@ -1,9 +1,11 @@
 package com.todotic.project1Api.controller;
 
+import com.todotic.project1Api.dto.ContactDTO;
 import com.todotic.project1Api.entity.Contact;
 import com.todotic.project1Api.service.ContactService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -27,14 +29,14 @@ public class ContactController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Contact create(@RequestBody Contact contact) {
-        return contactService.create(contact);
+    public Contact create(@Validated @RequestBody ContactDTO contactDTO) {
+        return contactService.create(contactDTO);
     }
 
     @PutMapping("{id}")
-    public Contact update(@PathVariable Integer id,
-                          @RequestBody Contact form) {
-        return contactService.update(id, form);
+    public Contact update(@Validated @RequestBody @PathVariable Integer id,
+                          ContactDTO contactDTO) {
+        return contactService.update(id, contactDTO);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
